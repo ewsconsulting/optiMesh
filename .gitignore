@@ -1,1 +1,5 @@
-gitignore
+**/linux64Gcc*
+**/lnInclude
+**/log.*
+**/.ipynb_checkpoints
+**/*.ipynb
