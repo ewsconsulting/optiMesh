@@ -1,1 +1,0 @@
-../liboptiMesh/optiDirections/objectives/orthogonality.H

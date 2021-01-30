@@ -301,14 +301,14 @@ bool facesDegenerate(const label& cellI, const label& faceI, const label& faceJ,
     const fvMesh& mesh, const scalar& degenerateAngle)
 {
   
-  vector ni = mesh.faces()[faceI].normal(mesh.points());
+  vector ni = mesh.faces()[faceI].areaNormal(mesh.points());
   ni /= mag(ni);
 
   if (faceI < mesh.nInternalFaces() && mesh.faceNeighbour()[faceI] == cellI) {
     ni *= -1.0;
   }
 
-  vector nj = mesh.faces()[faceJ].normal(mesh.points());
+  vector nj = mesh.faces()[faceJ].areaNormal(mesh.points());
   nj /= mag(nj);
 
   if (faceJ < mesh.nInternalFaces() && mesh.faceNeighbour()[faceJ] == cellI) {
@@ -496,7 +496,7 @@ void initializeCollapsedEdgesAndCells(const fvMesh& mesh,
 
 void appendCellToBoundaryLayerCells(const label& cellI, boundaryRefinement& bRef)
 {
-  if (bRef.cells.empty()) {
+  if (!bRef.cells.valid()) {
     bRef.cells = autoPtr<labelList>(new labelList(1, cellI));
   } else {
     bRef.cells().append(cellI);
@@ -504,7 +504,7 @@ void appendCellToBoundaryLayerCells(const label& cellI, boundaryRefinement& bRef
 }
 
 void assertCellsList(boundaryRefinement& bRef) {
-  if (bRef.cells.empty()) {
+  if (!bRef.cells.valid()) {
     bRef.cells = autoPtr<labelList>(new labelList(0));
   }
 }
@@ -555,7 +555,7 @@ int main(int argc, char *argv[])
 #include "createTime.H" 
 #include "createMesh.H"
 
-  word dictName = args.optionLookupOrDefault<word>("dict", "system/optiMeshDict");
+  word dictName = args.getOrDefault<word>("dict", "system/optiMeshDict");
 
   // load the dict
   IOdictionary dict 
@@ -573,7 +573,7 @@ int main(int argc, char *argv[])
   // read the global parameters
   label nIters(readLabel(dict.lookup("nIters")));
   label writeInterval(readLabel(dict.lookup("writeInterval")));
-  bool constant = args.optionFound("constant");
+  bool constant = args.found("constant");
 
   // load the objects
   autoPtr<optiMesh::optiDirection> optiDir

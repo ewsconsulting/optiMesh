@@ -1,9 +1,10 @@
 EXE_INC = \
   -I$(LIB_SRC)/finiteVolume/lnInclude \
   -I$(LIB_SRC)/meshTools/lnInclude \
-  -I../../src/lnInclude
+  -I../../src/liboptiMesh/lnInclude
 
 EXE_LIBS = \
   -lfiniteVolume \
   -lmeshTools \
-  -L$(FOAM_USER_LIBBIN) -loptiMesh
+  -L$(FOAM_USER_LIBBIN) \
+  -loptiMesh

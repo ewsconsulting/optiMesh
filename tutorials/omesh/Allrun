@@ -1,14 +1,12 @@
 #!/bin/bash
-. $FOAM_USER_LIBBIN/bashTools
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
 
-# run 'Allrun -h' to see what bashTools does
-
-runApplication rm -f -r 0 [1-9]* VTK/ constant/polyMesh
+touch omesh.foam
 
 runApplication blockMesh
 
 runApplication setSet -batch system/pointSetBatch
 
-runApplication cp -rf -T 0.orig 0
-
 runApplication optiMesh
+

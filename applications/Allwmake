@@ -1,9 +1,9 @@
 #!/bin/bash
 cd ${0%/*}
 
-wmake optiMesh
-wmake removeCells
-wmake collapseCells
+wmake optiMesh 2>&1 | tee log.optiMesh
+wmake removeCells 2>&1 | tee log.removeCells
+wmake collapseCells 2>&1 | tee log.collapseCells
 
 if [ -d $FOAM_USER_APPBIN ]
 then

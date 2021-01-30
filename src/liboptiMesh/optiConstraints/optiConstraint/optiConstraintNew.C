@@ -26,7 +26,7 @@ autoPtr<optiConstraint> optiConstraint::New(const fvMesh& mesh, const dictionary
 
   Info << "Selecting optiConstraint type: " << t << endl;
 
-  if (ptr.empty()) {
+  if (!ptr.valid()) {
     FatalErrorInFunction << "ptr cannot be empty here" << exit(FatalError);
   }
   return ptr;

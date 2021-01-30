@@ -1,0 +1,8 @@
+#!/bin/bash
+cd ${0%/*}
+
+find . -type d -name "$WM_ARCH$WM_COMPILER$WM_PRECISION_OPTION*" | xargs rm -rf
+find . -type d -name "lnInclude" | xargs rm -rf
+wclean liboptiMesh
+wclean libextraSets
+
